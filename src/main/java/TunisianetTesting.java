@@ -1,9 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import models.Account;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -18,14 +14,14 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TunisianetTesting {
-    //instance du driver
-    WebDriver driver;
+    public static void main(String[] args) throws InterruptedException {
+        //instance du driver
+        WebDriver driver;
 
-    //instance du l'exécuteur de Js
-    JavascriptExecutor js;
+        //instance du l'exécuteur de Js
+        JavascriptExecutor js;
 
-    @Before
-    public void initDriver() {
+
         //Utilisation d'un navigateur Opera
         WebDriverManager.operadriver().setup();
         driver = new OperaDriver();
@@ -40,16 +36,16 @@ public class TunisianetTesting {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(90));
-    }
-
-    @Test
-    public void buyMacCaseTesting() throws InterruptedException {
 
         //TODO:Naviguer vers le site de Tunisianet
         driver.get("https://www.tunisianet.com.tn");
 
+        //TODO:Maximiser la fenêtre
+        driver.manage().window().maximize();
+
         //TODO:Cliquer sur l'icon de User
         Thread.sleep(1000);
+
         //Pour trouver l'icon on peut partir du div d'id ="_desktop_user_info"
         //puis decendre dans son arborescence de deux div, le svg suivant est celui de l'icon de user
         WebElement userLoginDropdown = driver.findElement(By.cssSelector("#_desktop_user_info > div > div > svg"));
@@ -63,8 +59,6 @@ public class TunisianetTesting {
         //TODO:Cliquer sur "Pas de compte ? Créez-en un"
         Thread.sleep(1000);
         WebElement createAccountButton = driver.findElement(By.className("no-account"));
-        //Verifier le bouton
-        Assert.assertEquals("Pas de compte ? Créez-en un", createAccountButton.findElement(By.cssSelector("*")).getText());
         createAccountButton.click();
 
         //TODO:Choisir l'option "Mme"
@@ -77,7 +71,7 @@ public class TunisianetTesting {
         SimpleDateFormat dateFormater = new SimpleDateFormat(format);
         //* Changer les données pour chaque test
         //? ou bien on peut utiliser des méthodes qui génèrent des données random
-        Account userAccount = new Account("zouuu", "ABOUY", "zou@abouy.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
+        Account userAccount = new Account("oumaima", "kboubi", "ouma@kboubi.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
 
         Thread.sleep(1000);
         List<WebElement> createAccountForm = driver.findElements(By.cssSelector("input.form-control"));
@@ -157,19 +151,14 @@ public class TunisianetTesting {
 
         //TODO:Finaliser le process d'achat du produit
         Thread.sleep(2000);
-        WebElement buyButton = driver.findElement(By.cssSelector("a.btn-block"));
+        WebElement buyButton = driver.findElement(new By.ByLinkText("Commander"));
         buyButton.click();
-    }
-    @After
-    public void closeDriver() throws InterruptedException{
         Thread.sleep(4000);
-
-        //driver.close();
 
         //la méthode quit ferme la fenêtre ouverte actuelle sur laquelle
         // le pilote se concentre et termine la session WebDriver avec élégance
         driver.quit();
+
+
     }
-
-
 }
