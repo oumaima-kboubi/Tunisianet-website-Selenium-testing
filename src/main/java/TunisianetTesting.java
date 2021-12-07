@@ -73,7 +73,7 @@ public class TunisianetTesting {
         //TODO:Remplir le formulaire par les données du compte
         String format = "dd/MM/yyyy";
         SimpleDateFormat dateFormater = new SimpleDateFormat(format);
-        Account userAccount = new Account("ouma","kb","ou@ou.com","123abcABC",new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
+        Account userAccount = new Account("oumaa","kbb","ouu@ouu.com","123abcABC",new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
 
         Thread.sleep(1000);
         List<WebElement> createAccountForm = driver.findElements(By.cssSelector("input.form-control"));
@@ -90,6 +90,11 @@ public class TunisianetTesting {
         Thread.sleep(1000);
         WebElement submitButton = driver.findElement(By.className("form-control-submit"));
         submitButton.click();
+
+        //TODO:Se déconnecter du site
+        Thread.sleep(1000);
+        WebElement logoutButton = driver.findElement(By.className("logout"));
+        logoutButton.click();
 
     }
 
