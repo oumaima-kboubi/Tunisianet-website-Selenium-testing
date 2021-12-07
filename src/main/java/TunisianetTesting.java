@@ -74,7 +74,7 @@ public class TunisianetTesting {
         //TODO:Remplir le formulaire par les données du compte
         String format = "dd/MM/yyyy";
         SimpleDateFormat dateFormater = new SimpleDateFormat(format);
-        Account userAccount = new Account("oumab", "kbaa", "ouaabb@ouaa.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
+        Account userAccount = new Account("ali", "baba", "ali@baba.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
 
         Thread.sleep(1000);
         List<WebElement> createAccountForm = driver.findElements(By.cssSelector("input.form-control"));
@@ -99,7 +99,7 @@ public class TunisianetTesting {
 
         //TODO:Se déconnecter du site
         Thread.sleep(1000);
-        userLoginDropdown=driver.findElement(By.cssSelector("#_desktop_user_info > div > div > svg"));
+        userLoginDropdown = driver.findElement(By.cssSelector("#_desktop_user_info > div > div > svg"));
         userLoginDropdown.click();
         Thread.sleep(2000);
         WebElement logoutButton = driver.findElement(By.className("logout"));
@@ -108,12 +108,12 @@ public class TunisianetTesting {
         //TODO:Se connecter de nouveau au compte récemment créé
         //Cliquer sur l'icon user dans la navbar
         Thread.sleep(1000);
-        userLoginDropdown= driver.findElement(By.cssSelector("#_desktop_user_info > div > div > svg"));
+        userLoginDropdown = driver.findElement(By.cssSelector("#_desktop_user_info > div > div > svg"));
         userLoginDropdown.click();
 
         //Cliquer sur l'option connexion
         Thread.sleep(1000);
-        connectionButton=driver.findElement(By.cssSelector(".user-down > li > a > span"));
+        connectionButton = driver.findElement(By.cssSelector(".user-down > li > a > span"));
         connectionButton.click();
 
         //Remplir le champs de l'email
@@ -147,8 +147,17 @@ public class TunisianetTesting {
         List<WebElement> productsList = driver.findElements(By.className("product-title"));
         productsList.get(0).click();
 
+        //TODO:Ajouter le produit au panier
+        Thread.sleep(2000);
+        WebElement addToCart = driver.findElement(By.className("add-to-cart"));
+        addToCart.click();
 
-
+        //TODO:Finaliser le process d'achat du produit
+        Thread.sleep(2000);
+        WebElement buyButton = driver.findElement(By.cssSelector("a.btn-block"));
+        buyButton.click();
     }
+
+
 
 }
