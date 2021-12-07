@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import models.Account;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,7 +75,7 @@ public class TunisianetTesting {
         //TODO:Remplir le formulaire par les données du compte
         String format = "dd/MM/yyyy";
         SimpleDateFormat dateFormater = new SimpleDateFormat(format);
-        Account userAccount = new Account("ali", "baba", "ali@baba.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
+        Account userAccount = new Account("zouuu", "ABOUY", "zou@abouy.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
 
         Thread.sleep(1000);
         List<WebElement> createAccountForm = driver.findElements(By.cssSelector("input.form-control"));
@@ -157,7 +158,16 @@ public class TunisianetTesting {
         WebElement buyButton = driver.findElement(By.cssSelector("a.btn-block"));
         buyButton.click();
     }
+    @After
+    public void closeDriver() throws InterruptedException{
+        Thread.sleep(4000);
 
+        //driver.close();
+
+        //la méthode quit ferme la fenêtre ouverte actuelle sur laquelle
+        // le pilote se concentre et termine la session WebDriver avec élégance
+        driver.quit();
+    }
 
 
 }
