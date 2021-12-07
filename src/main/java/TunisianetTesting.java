@@ -1,25 +1,36 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import models.Account;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.opera.OperaDriver;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class TunisianetTesting {
     //instance du driver
     WebDriver driver;
 
-
+    //instance du l'exécuteur de Js
+    JavascriptExecutor js;
     @Before
     public void initDriver() {
         //Utilisation d'un navigateur Opera
         WebDriverManager.operadriver().setup();
         driver = new OperaDriver();
+
+        //initialisation de l'exécuteur Js
+        js=(JavascriptExecutor) driver;
+
         //NB: Cette initialisation (time,TimeUnit) est "deprecated" et remplacée par (Duration)
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -44,15 +55,42 @@ public class TunisianetTesting {
 
         //TODO:Cliquer sur le bouton "connexion"
         Thread.sleep(1000);
-        WebElement boutonConnexion = driver.findElement(By.cssSelector(".user-down > li > a > span" ));
-        boutonConnexion.click();
+        WebElement connectionButton = driver.findElement(By.cssSelector(".user-down > li > a > span" ));
+        connectionButton.click();
 
         //TODO:Cliquer sur "Pas de compte ? Créez-en un"
         Thread.sleep(1000);
-        WebElement boutonCreerCompte = driver.findElement(By.className("no-account"));
+        WebElement createAccountButton = driver.findElement(By.className("no-account"));
         //Verifier le bouton
-        Assert.assertEquals("Pas de compte ? Créez-en un",boutonCreerCompte.findElement(By.cssSelector("*")).getText());
-        boutonCreerCompte.click();
+        Assert.assertEquals("Pas de compte ? Créez-en un",createAccountButton.findElement(By.cssSelector("*")).getText());
+        createAccountButton.click();
+
+        //TODO:Choisir l'option "Mme"
+        Thread.sleep(1000);
+        List<WebElement> genderOptions = driver.findElements(By.className("custom-radio"));
+        genderOptions.get(1).click();
+
+        //TODO:Remplir le formulaire par les données du compte
+        String format = "dd/MM/yyyy";
+        SimpleDateFormat dateFormater = new SimpleDateFormat(format);
+        Account userAccount = new Account("ouma","kb","ou@ou.com","123abcABC",new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
+
+        Thread.sleep(1000);
+        List<WebElement> createAccountForm = driver.findElements(By.cssSelector("input.form-control"));
+        createAccountForm.get(1).sendKeys(userAccount.firstName);
+        createAccountForm.get(2).sendKeys(userAccount.name);
+        createAccountForm.get(3).sendKeys(userAccount.email);
+        createAccountForm.get(4).sendKeys(userAccount.password);
+        createAccountForm.get(5).sendKeys(dateFormater.format(userAccount.birthday));
+
+        //TODO:Basculer vers le bas
+        js.executeScript("window.scrollBy(0,250)","");
+
+        //TODO:Cliquer sur "Enregister"
+        Thread.sleep(1000);
+        WebElement submitButton = driver.findElement(By.className("form-control-submit"));
+        submitButton.click();
+
     }
 
 }
