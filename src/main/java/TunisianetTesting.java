@@ -74,7 +74,7 @@ public class TunisianetTesting {
         //TODO:Remplir le formulaire par les données du compte
         String format = "dd/MM/yyyy";
         SimpleDateFormat dateFormater = new SimpleDateFormat(format);
-        Account userAccount = new Account("oumab", "kba", "oua@oua.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
+        Account userAccount = new Account("oumab", "kbaa", "ouaabb@ouaa.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
 
         Thread.sleep(1000);
         List<WebElement> createAccountForm = driver.findElements(By.cssSelector("input.form-control"));
@@ -130,6 +130,24 @@ public class TunisianetTesting {
         Thread.sleep(1000);
         WebElement loginButton = driver.findElement(By.id("submit-login"));
         loginButton.click();
+
+        //TODO:Chercher le laptop "PC portable MacBook M1 13.3"
+        //Saisir la marque du laptop dans le champs de recherche
+        Thread.sleep(2000);
+        WebElement searchBarField = driver.findElement(By.className("search_query"));
+        searchBarField.sendKeys("PC portable MacBook M1 13.3");
+
+        //Cliquer sur le bouton de recherche
+        Thread.sleep(2000);
+        WebElement searchButton = driver.findElement(By.cssSelector("#sp-btn-search > button"));
+        searchButton.click();
+
+        //Cliquer sur le premier produits
+        Thread.sleep(2000);
+        List<WebElement> productsList = driver.findElements(By.className("product-title"));
+        productsList.get(0).click();
+
+
 
     }
 
