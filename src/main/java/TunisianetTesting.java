@@ -33,8 +33,8 @@ public class TunisianetTesting {
         //initialisation de l'exécuteur Js
         js = (JavascriptExecutor) driver;
 
-        //NB: Cette initialisation (time,TimeUnit) est "deprecated" et remplacée par (Duration)
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //! NB: Cette initialisation (time,TimeUnit) est "deprecated" et remplacée par (Duration)
+        //! driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         //Configuration de l'attente implicite
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -75,6 +75,8 @@ public class TunisianetTesting {
         //TODO:Remplir le formulaire par les données du compte
         String format = "dd/MM/yyyy";
         SimpleDateFormat dateFormater = new SimpleDateFormat(format);
+        //* Changer les données pour chaque test
+        //? ou bien on peut utiliser des méthodes qui génèrent des données random
         Account userAccount = new Account("zouuu", "ABOUY", "zou@abouy.com", "123abcABC", new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1) * 365 * 22)); //22ans
 
         Thread.sleep(1000);
