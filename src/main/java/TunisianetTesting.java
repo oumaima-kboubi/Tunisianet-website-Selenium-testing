@@ -1,11 +1,11 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import models.Account;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.opera.OperaDriver;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TunisianetTesting {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         //instance du driver
         WebDriver driver;
 
@@ -154,6 +154,20 @@ public class TunisianetTesting {
         WebElement buyButton = driver.findElement(new By.ByLinkText("Commander"));
         buyButton.click();
         Thread.sleep(4000);
+
+
+        //TODO:Take screenshot
+        //Convert web driver object to TakeScreenshot
+        TakesScreenshot scrShot =((TakesScreenshot)driver);
+
+        //Call getScreenshotAs method to create image file
+        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+
+        //Move image file to new destination
+        File DestFile=new File("I:\\OneDrive - Ministere de l'Enseignement Superieur et de la Recherche Scientifique\\Desktop\\TP2 screenshot\\screenshot.png");
+
+        //Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
 
         //la méthode quit ferme la fenêtre ouverte actuelle sur laquelle
         // le pilote se concentre et termine la session WebDriver avec élégance
